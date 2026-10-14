@@ -45,6 +45,12 @@ const pad = (n: number) => String(n).padStart(2, '0');
           <output id="clock" for="hour">14:00</output>
         </div>
         <div class="plate-foot"><span id="alt">{t.alt}</span><span id="az">{t.az}</span></div>
+        <ul class="legend" aria-hidden="true">
+          <li><i class="k-b"></i>{t.legend.building}</li>
+          <li><i class="k-t"></i>{t.legend.tree}</li>
+          <li><i class="k-s"></i>{t.legend.shadow}</li>
+          <li><i class="k-u"></i>{t.legend.sun}</li>
+        </ul>
       </div>
     </div>
 

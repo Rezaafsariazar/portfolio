@@ -27,6 +27,28 @@ if (svg) {
   for (const [x, y, w, h] of [[0, 150, 400, 24], [160, 0, 22, 320], [0, 276, 400, 6]])
     el('rect', { x, y, width: w, height: h, fill: 'var(--line)', opacity: 0.8 });
 
+  // Grid ticks + sun path with hour marks
+  const gridG = el('g', { stroke: 'var(--muted)', 'stroke-width': 0.4, opacity: 0.35 });
+  for (let x = 50; x < 400; x += 50) el('line', { x1: x, y1: 0, x2: x, y2: 320 }, gridG);
+  for (let y = 40; y < 320; y += 40) el('line', { x1: 0, y1: y, x2: 400, y2: y }, gridG);
+  const sunAt = (t: number) => {
+    const a = ((80 + t * 200) * Math.PI) / 180;
+    return [200 + Math.sin(a) * 168 * 0.9, 160 - Math.cos(a) * 130 * 0.9];
+  };
+  const pts: string[] = [];
+  for (let i = 0; i <= 40; i++) pts.push(sunAt(i / 40).map((n) => n.toFixed(1)).join(','));
+  el('polyline', { points: pts.join(' '), fill: 'none', stroke: 'var(--sun)', 'stroke-width': 1, 'stroke-dasharray': '3 4', opacity: 0.8 });
+  for (const h of [6, 9, 12, 15, 18]) {
+    const [x, y] = sunAt((h * 60 - 360) / 840);
+    el('circle', { cx: x, cy: y, r: 2, fill: 'var(--sun)' });
+    el('text', { x, y: y + 13, 'text-anchor': 'middle', 'font-size': 8, fill: 'var(--muted)', 'font-family': 'IBM Plex Mono, monospace' }).textContent = String(h).padStart(2, '0');
+  }
+  // Scale bar: 120 units = 50 m at 2.4 units/m
+  el('rect', { x: 268, y: 298, width: 120, height: 4, fill: 'var(--ink)' });
+  el('rect', { x: 328, y: 298, width: 60, height: 4, fill: 'var(--surface)', stroke: 'var(--ink)', 'stroke-width': 0.6 });
+  el('text', { x: 268, y: 294, 'font-size': 8, fill: 'var(--ink)', 'font-family': 'IBM Plex Mono, monospace' }).textContent = '0';
+  el('text', { x: 388, y: 294, 'text-anchor': 'end', 'font-size': 8, fill: 'var(--ink)', 'font-family': 'IBM Plex Mono, monospace' }).textContent = '50 m';
+
   const shadowG = el('g', { fill: 'var(--shadow)', opacity: 0.34 });
   const treeShadowG = el('g', { fill: 'var(--shadow)', opacity: 0.3 });
   for (const b of buildings)
