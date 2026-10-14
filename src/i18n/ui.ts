@@ -29,7 +29,11 @@ export const ui = {
     source: 'Source',
     aboutH: 'About',
     aboutP: 'From data to something people can walk through.',
-    aboutText: 'Short intro in your own words: where you studied or work, what you are looking for, and what you care about.',
+    about: [
+      "Master's student in Sustainable Mobility at HfWU, focused on mobility data, GIS, and urban planning.",
+      'Research assistant (Hi-Wi) at BWIM, analyzing mobility quality across German cities.',
+      'Also building ShadeKA, a shade-optimized pedestrian routing app for Karlsruhe, and CampusGo, a mobility assistant for international students.',
+    ],
     skills: [
       { h: 'Frontend', p: 'React, TypeScript, WebGL' },
       { h: 'Geo', p: 'PostGIS, MapLibre, OpenStreetMap' },
@@ -40,8 +44,6 @@ export const ui = {
     copy: 'Copy address',
     copied: 'Copied',
     copyFail: 'Press ⌘/Ctrl+C',
-    cv: 'CV (PDF)',
-    placeholdersNote: 'CV is a placeholder',
     theme: 'Toggle theme',
     langSwitch: 'Deutsch',
     langSwitchLabel: 'Auf Deutsch lesen',
@@ -74,7 +76,11 @@ export const ui = {
     source: 'Quellcode',
     aboutH: 'Über mich',
     aboutP: 'Von Daten zu etwas, durch das Menschen gehen können.',
-    aboutText: 'Kurze Vorstellung in eigenen Worten: Studium oder Arbeit, was du suchst und was dir wichtig ist.',
+    about: [
+      'Masterstudent Nachhaltige Mobilität an der HfWU mit Schwerpunkt auf Mobilitätsdaten, GIS und Stadtplanung.',
+      'Wissenschaftliche Hilfskraft (Hi-Wi) am BWIM, wo ich die Mobilitätsqualität in deutschen Städten analysiere.',
+      'Daneben baue ich ShadeKA, eine schattenoptimierte Fußgänger-Routing-App für Karlsruhe, und CampusGo, einen Mobilitätsassistenten für internationale Studierende.',
+    ],
     skills: [
       { h: 'Frontend', p: 'React, TypeScript, WebGL' },
       { h: 'Geo', p: 'PostGIS, MapLibre, OpenStreetMap' },
@@ -85,8 +91,6 @@ export const ui = {
     copy: 'Adresse kopieren',
     copied: 'Kopiert',
     copyFail: '⌘/Strg+C drücken',
-    cv: 'Lebenslauf (PDF)',
-    placeholdersNote: 'Lebenslauf ist ein Platzhalter',
     theme: 'Design wechseln',
     langSwitch: 'English',
     langSwitchLabel: 'Read in English',

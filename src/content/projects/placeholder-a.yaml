@@ -1,8 +1,0 @@
-title: Next project
-year: '2026'
-type: { en: Type, de: Art }
-status: placeholder
-summary:
-  en: One or two sentences, what you built and why.
-  de: Ein bis zwei Sätze, was du gebaut hast und warum.
-stack: [Stack, Stack]

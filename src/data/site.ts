@@ -7,6 +7,4 @@ export const site = {
   email: { value: 'Rezaafsariazar@gmail.com', placeholder: false },
   github: 'https://github.com/Rezaafsariazar',
   linkedin: { value: 'https://www.linkedin.com/in/rezaafsariazar', placeholder: false },
-  cv: { href: '/Reza-Afsariazar-CV.pdf', placeholder: true },
-  aboutPlaceholder: true,
 };
