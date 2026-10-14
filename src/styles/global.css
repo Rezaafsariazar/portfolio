@@ -94,3 +94,50 @@ footer { border-top: 1px solid var(--line); padding-top: 18px; display: flex; ju
   nav { gap: 16px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+
+/* ── Survey-sheet v2 ───────────────────────────────────────────── */
+:root { --grid: rgba(14, 124, 134, .09); }
+:root[data-theme='dark'] { --grid: rgba(60, 195, 207, .08); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme='light']) { --grid: rgba(60, 195, 207, .08); } }
+
+.hero {
+  position: relative;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+  margin: 0 calc(-1 * clamp(0px, 3vw, 24px));
+  padding-left: clamp(0px, 3vw, 24px);
+  padding-right: clamp(0px, 3vw, 24px);
+}
+.plate { border-color: var(--accent); border-width: 1.5px; border-radius: 2px; box-shadow: 6px 6px 0 var(--line); }
+.plate svg { border-radius: 0; }
+nav a.lang { color: var(--accent); border: 1px solid var(--line); border-radius: 3px; padding: 1px 8px; }
+nav a.lang:hover { border-color: var(--accent); color: var(--accent); }
+
+.plates { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.card {
+  position: relative; background: var(--surface); border: 1px solid var(--line);
+  padding: 20px 20px 18px; min-width: 0; display: flex; flex-direction: column;
+}
+.card::before, .card::after {
+  content: ''; position: absolute; width: 10px; height: 10px; border: 0 solid var(--accent);
+}
+.card::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+.card::after { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+.card-meta { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font: 500 11px var(--f-mono); color: var(--muted); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 14px; }
+.card h3 { font: 700 26px/1.15 var(--f-display); letter-spacing: -.02em; margin: 0 0 8px; }
+.card p { margin: 0 0 14px; color: var(--muted); }
+.card .links { margin-top: auto; }
+.card.ghost { border-style: dashed; background: transparent; }
+.card.ghost h3, .card.ghost p { opacity: .75; }
+.card:first-child:not(.ghost) { grid-column: 1 / -1; border-color: var(--accent); }
+.card:first-child:not(.ghost) h3 { font-size: clamp(30px, 4vw, 44px); }
+.card:first-child:not(.ghost) p { max-width: 62ch; font-size: 17px; }
+
+@media (max-width: 820px) {
+  .plates { grid-template-columns: minmax(0, 1fr); }
+  .hero { margin: 0; padding-left: 0; padding-right: 0; }
+  nav { flex-wrap: wrap; row-gap: 8px; }
+}

@@ -1,0 +1,11 @@
+title: ShadeKA
+year: '2026'
+type: { en: Web app, de: Web-App }
+status: live
+summary:
+  en: Shade-aware walking-route planner for Karlsruhe. Prefers shaded streets, computes shadows from building and tree geometry for the chosen time, and shows the route in a 3D city view.
+  de: Schattenbewusster Routenplaner für Fußwege in Karlsruhe. Bevorzugt schattige Straßen, berechnet Schatten aus Gebäude- und Baumgeometrie zur gewählten Uhrzeit und zeigt die Route in einer 3D-Stadtansicht.
+stack: [React 19, TypeScript, MapLibre GL, three.js, FastAPI, PostGIS]
+links:
+  - { kind: demo, href: 'https://shadeka.rezaafsariazar.com' }
+  - { kind: source, href: 'https://github.com/Rezaafsariazar/Shadeka' }

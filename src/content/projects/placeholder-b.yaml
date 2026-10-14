@@ -1,0 +1,8 @@
+title: Another project
+year: '2025'
+type: { en: Type, de: Art }
+status: placeholder
+summary:
+  en: Add a project by dropping one YAML file into src/content/projects.
+  de: 'Ein Projekt hinzufügen: eine YAML-Datei in src/content/projects ablegen.'
+stack: [Stack]

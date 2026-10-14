@@ -1,6 +1,7 @@
 // Sun-and-shadow plate: top-down block, shadows follow an illustrative sun arc.
 const NS = 'http://www.w3.org/2000/svg';
 const svg = document.getElementById('map') as unknown as SVGSVGElement | null;
+const L = document.getElementById('plate')?.dataset ?? {};
 
 type Attrs = Record<string, string | number>;
 function el(name: string, attrs: Attrs, parent: Element | null = svg): SVGElement {
@@ -51,9 +52,9 @@ if (svg) {
     const tan = Math.tan((elev * Math.PI) / 180);
 
     $('clock').textContent = `${pad(Math.floor(min / 60))}:${pad(min % 60)}`;
-    $('alt').textContent = `Sun altitude ${elev.toFixed(0)}°`;
-    $('az').textContent = `Azimuth ${azim.toFixed(0)}°`;
-    $('phase').textContent = elev < 20 ? 'Long shadows' : elev > 45 ? 'Short shadows' : 'Mid-day';
+    $('alt').textContent = `${L.alt} ${elev.toFixed(0)}°`;
+    $('az').textContent = `${L.az} ${azim.toFixed(0)}°`;
+    $('phase').textContent = elev < 20 ? L.low : elev > 45 ? L.high : L.mid;
     hour.setAttribute('aria-valuetext', $('clock').textContent!);
 
     const cx = 200 + sx * 168 * 0.9, cy = 160 + sy * 130 * 0.9;
@@ -86,15 +87,15 @@ copyBtn?.addEventListener('click', async () => {
   const text = document.getElementById('mail')?.textContent?.trim() ?? '';
   try {
     await navigator.clipboard.writeText(text);
-    copyBtn.textContent = 'Copied';
+    copyBtn.textContent = copyBtn.dataset.copied ?? 'Copied';
   } catch {
     const r = document.createRange();
     r.selectNodeContents(document.getElementById('mail')!);
     getSelection()?.removeAllRanges();
     getSelection()?.addRange(r);
-    copyBtn.textContent = 'Press ⌘/Ctrl+C';
+    copyBtn.textContent = copyBtn.dataset.fail ?? 'Ctrl+C';
   }
-  setTimeout(() => (copyBtn.textContent = 'Copy address'), 1800);
+  setTimeout(() => (copyBtn.textContent = copyBtn.dataset.label ?? 'Copy'), 1800);
 });
 
 // Theme toggle

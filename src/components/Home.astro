@@ -1,0 +1,113 @@
+---
+import { getCollection } from 'astro:content';
+import { site } from '../data/site';
+import { ui, type Lang } from '../i18n/ui';
+
+const { lang } = Astro.props as { lang: Lang };
+const t = ui[lang];
+const other: Lang = lang === 'en' ? 'de' : 'en';
+const otherHref = other === 'en' ? '/' : '/de/';
+
+const projects = (await getCollection('projects')).sort((a, b) => {
+  const ph = Number(a.data.status === 'placeholder') - Number(b.data.status === 'placeholder');
+  return ph || b.data.year.localeCompare(a.data.year) || a.data.title.localeCompare(b.data.title);
+});
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+<div class="wrap">
+  <a class="skip" href="#work">{t.skip}</a>
+  <header class="top">
+    <a class="mark" href={lang === 'en' ? '/' : '/de/'}>Reza<span>.</span>Afsariazar</a>
+    <nav aria-label="Sections">
+      <a href="#work">{t.nav.work}</a><a href="#about">{t.nav.about}</a><a href="#contact">{t.nav.contact}</a>
+      <a class="lang" href={otherHref} hreflang={other} lang={other} aria-label={t.langSwitchLabel}>{t.langSwitch}</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero" id="top">
+      <div>
+        <p class="coords">{site.coords} · {site.location}</p>
+        <h1>{t.h1a}<em>{t.h1b}</em>{t.h1c}</h1>
+        <p class="lede">{t.lede}</p>
+        <div class="cta">
+          <a class="btn primary" href="#work">{t.ctaWork}</a>
+          <a class="btn" href="#contact">{t.ctaContact}</a>
+        </div>
+      </div>
+
+      <div class="plate" id="plate" data-alt={t.alt} data-az={t.az} data-low={t.phases.low} data-mid={t.phases.mid} data-high={t.phases.high}>
+        <div class="plate-head"><span>{t.plate}</span><span id="phase">{t.phases.mid}</span></div>
+        <svg id="map" viewBox="0 0 400 320" role="img" aria-label={t.plateLabel}></svg>
+        <div class="slider">
+          <label for="hour">{t.time}</label>
+          <input id="hour" type="range" min="360" max="1200" step="5" value="840" />
+          <output id="clock" for="hour">14:00</output>
+        </div>
+        <div class="plate-foot"><span id="alt">{t.alt}</span><span id="az">{t.az}</span></div>
+      </div>
+    </div>
+
+    <section id="work">
+      <div class="sec-head"><h2>{t.workH}</h2><p>{t.workP}</p></div>
+      <div class="plates">
+        {projects.map((p, i) => (
+          <article class:list={['card', { ghost: p.data.status === 'placeholder' }]}>
+            <div class="card-meta">
+              <span>{t.plateWord} {pad(i + 1)}</span>
+              <span>{p.data.year} · {p.data.type[lang]}</span>
+            </div>
+            <h3>
+              {p.data.title}
+              {p.data.status === 'placeholder' && <span class="badge">{t.placeholder}</span>}
+            </h3>
+            <p>{p.data.summary[lang]}</p>
+            <ul class="tags">{p.data.stack.map((s) => <li>{s}</li>)}</ul>
+            {p.data.links.length > 0 && (
+              <div class="links">
+                {p.data.links.map((l) => (
+                  <a href={l.href} target="_blank" rel="noopener">{t[l.kind]} ↗</a>
+                ))}
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="sec-head"><h2>{t.aboutH}</h2><p>{t.aboutP}</p></div>
+      <div class="about">
+        <div></div>
+        <div>
+          <p>{t.aboutText}{site.aboutPlaceholder && <span class="badge">{t.placeholder}</span>}</p>
+          <div class="skills">
+            {t.skills.map((s) => <div><h4>{s.h}</h4><p>{s.p}</p></div>)}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="sec-head"><h2>{t.contactH}</h2><p>{t.contactP}</p></div>
+      <div class="contact-row">
+        <span class="big" id="mail">{site.email.value}</span>
+        <button type="button" id="copy" data-label={t.copy} data-copied={t.copied} data-fail={t.copyFail}>{t.copy}</button>
+        {site.email.placeholder && <span class="badge">{t.placeholder}</span>}
+      </div>
+      <div class="contact-links">
+        <a href={site.linkedin.value} target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a href={site.github} target="_blank" rel="noopener">GitHub ↗</a>
+        <a href={site.cv.href} download>{t.cv} ↓</a>
+        {(site.linkedin.placeholder || site.cv.placeholder) && <span class="badge">{t.placeholdersNote}</span>}
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© {new Date().getFullYear()} {site.name} · {site.location}</span>
+    <button class="theme-btn" id="theme" type="button">{t.theme}</button>
+  </footer>
+</div>
+
+<script src="../scripts/plate.ts"></script>
