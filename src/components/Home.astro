@@ -17,7 +17,7 @@ const work = cv.find((e) => e.group === 'experience');
 <a class="skip" href="#projects">{t.skip}</a>
 
 <header class="top">
-  <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;width:100%">
+  <div class="wrap top-inner">
     <a class="brand" href={home}>{site.name}</a>
     <nav aria-label={t.nav.projects}>
       <a href="#projects">{t.nav.projects}</a>
@@ -36,10 +36,6 @@ const work = cv.find((e) => e.group === 'experience');
       <h1>{site.name}</h1>
       <p class="role">{t.role}</p>
       <p class="lead">{t.intro}</p>
-      <p class="note">
-        <span>{t.availability}</span>
-        {site.availability.placeholder && <span class="badge">{t.placeholder}</span>}
-      </p>
       <div class="actions">
         <a class="btn primary" href={`mailto:${site.email}`}>{t.emailAction}</a>
         <a class="btn" href={site.linkedin} target="_blank" rel="noopener">LinkedIn</a>
@@ -55,13 +51,13 @@ const work = cv.find((e) => e.group === 'experience');
         {study && (
           <div>
             <dt>{t.facts.studying}</dt>
-            <dd>{study.role[lang]}<br /><span style="color:var(--muted)">{study.org}</span></dd>
+            <dd>{study.role[lang]}<br /><span class="sub">{study.org}</span></dd>
           </div>
         )}
         {work && (
           <div>
             <dt>{t.facts.working}</dt>
-            <dd>{work.role[lang]}<br /><span style="color:var(--muted)">{work.org}</span></dd>
+            <dd>{work.role[lang]}<br /><span class="sub">{work.org}</span></dd>
           </div>
         )}
         <div>
@@ -101,7 +97,7 @@ const work = cv.find((e) => e.group === 'experience');
               )}
 
               {p.data.stack.length > 0 && (
-                <div class="block" style="margin-top:18px">
+                <div class="block spaced">
                   <span class="label">{t.stackLabel}</span>
                   <ul class="chips">{p.data.stack.map((s) => <li>{s}</li>)}</ul>
                 </div>

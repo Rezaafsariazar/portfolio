@@ -173,3 +173,7 @@ footer a { color: var(--muted); }
   section { padding: 48px 0; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+
+.top-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; width: 100%; }
+.facts .sub { color: var(--muted); }
+.block.spaced { margin-top: 18px; }

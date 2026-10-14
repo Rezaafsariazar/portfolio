@@ -15,7 +15,6 @@ export const ui = {
     role: 'Mobility data · GIS · Urban planning',
     intro:
       "Master's student in Sustainable Mobility at HfWU and research assistant at BWIM, where I analyse mobility quality across German cities. I work with mobility data, GIS and urban planning, and build web tools that make spatial data usable.",
-    availability: 'Looking for: add what you are looking for (working student, internship, thesis, full-time).',
     facts: { based: 'Based in', focus: 'Focus', studying: 'Studying', working: 'Research assistant' },
     factFocus: 'Mobility data, GIS, urban planning',
     emailAction: 'Email me',
@@ -70,7 +69,6 @@ export const ui = {
     role: 'Mobilitätsdaten · GIS · Stadtplanung',
     intro:
       'Masterstudent für Nachhaltige Mobilität an der HfWU und wissenschaftliche Hilfskraft am BWIM, wo ich die Mobilitätsqualität in deutschen Städten analysiere. Ich arbeite mit Mobilitätsdaten, GIS und Stadtplanung und baue Web-Tools, die Geodaten nutzbar machen.',
-    availability: 'Ich suche: hier eintragen, was du suchst (Werkstudium, Praktikum, Abschlussarbeit, Festanstellung).',
     facts: { based: 'Standort', focus: 'Schwerpunkt', studying: 'Studium', working: 'Hilfskraft' },
     factFocus: 'Mobilitätsdaten, GIS, Stadtplanung',
     emailAction: 'E-Mail schreiben',

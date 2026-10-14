@@ -9,7 +9,6 @@ export const site = {
   linkedin: 'https://www.linkedin.com/in/rezaafsariazar',
   // Set to null once you have a real CV file in /public.
   cv: null as string | null,
-  availability: { placeholder: true },
 };
 
 // Experience and education. `period.placeholder` marks dates that still need to be filled in.
