@@ -121,13 +121,3 @@ copyBtn?.addEventListener('click', async () => {
   }
   setTimeout(() => (copyBtn.textContent = copyBtn.dataset.label ?? 'Copy'), 1800);
 });
-
-// Theme toggle
-document.getElementById('theme')?.addEventListener('click', () => {
-  const r = document.documentElement;
-  const cur = r.getAttribute('data-theme');
-  const dark = cur ? cur === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
-  const next = dark ? 'light' : 'dark';
-  r.setAttribute('data-theme', next);
-  try { localStorage.setItem('theme', next); } catch {}
-});

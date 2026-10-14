@@ -49,12 +49,6 @@ const ld = {
     <meta name="twitter:description" content={t.description} />
     <meta name="twitter:image" content={ogImage} />
     <script type="application/ld+json" set:html={JSON.stringify(ld)} />
-    <script is:inline>
-      try {
-        var th = localStorage.getItem('theme');
-        if (th === 'light' || th === 'dark') document.documentElement.setAttribute('data-theme', th);
-      } catch (e) {}
-    </script>
   </head>
   <body>
     <slot />

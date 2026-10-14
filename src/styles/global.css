@@ -102,9 +102,8 @@ section { padding: 72px 0 8px; }
 .contact-big { display: block; font: 400 clamp(26px, 6vw, 56px)/1.1 var(--f-display); letter-spacing: -.02em; margin: 18px 0 14px; overflow-wrap: anywhere; user-select: all; }
 .contact-row { display: flex; flex-wrap: wrap; gap: 12px 22px; align-items: center; font: 500 14px var(--f-body); }
 .contact-row a { color: var(--accent); }
-.contact-row button, .theme-btn { font: 500 13px var(--f-body); border: 1px solid var(--ink); background: transparent; color: var(--ink); padding: 5px 12px; cursor: pointer; border-radius: 0; }
-.contact-row button:hover, .theme-btn:hover { background: var(--ink); color: var(--bg); }
-.theme-btn { font: 500 11px var(--f-mono); border-color: var(--line); color: var(--muted); }
+.contact-row button { font: 500 13px var(--f-body); border: 1px solid var(--ink); background: transparent; color: var(--ink); padding: 5px 12px; cursor: pointer; border-radius: 0; }
+.contact-row button:hover { background: var(--ink); color: var(--bg); }
 footer { margin-top: 80px; border-top: 1px solid var(--line); padding-top: 16px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font: 500 12px var(--f-mono); color: var(--muted); align-items: center; }
 
 @media (max-width: 640px) {
