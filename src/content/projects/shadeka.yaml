@@ -1,10 +1,22 @@
 title: ShadeKA
-year: '2026'
-type: { en: Web app, de: Web-App }
-status: live
+order: 1
+period: '2026'
+kind: { en: Web application · geospatial, de: Webanwendung · Geodaten }
+state: live
+figure: shadow-plate
 summary:
-  en: Shade-aware walking-route planner for Karlsruhe. Prefers shaded streets, computes shadows from building and tree geometry for the chosen time, and shows the route in a 3D city view.
-  de: Schattenbewusster Routenplaner für Fußwege in Karlsruhe. Bevorzugt schattige Straßen, berechnet Schatten aus Gebäude- und Baumgeometrie zur gewählten Uhrzeit und zeigt die Route in einer 3D-Stadtansicht.
+  en: A pedestrian routing app for Karlsruhe that optimises walking routes for shade. It computes shadows from building and tree geometry for a chosen time of day and shows the resulting route in a 3D city view.
+  de: Eine Fußgänger-Routing-App für Karlsruhe, die Wege auf Schatten optimiert. Sie berechnet Schatten aus Gebäude- und Baumgeometrie für eine gewählte Uhrzeit und zeigt die Route in einer 3D-Stadtansicht.
+role:
+  en: Concept, data pipeline, backend and frontend.
+  de: Konzept, Datenpipeline, Backend und Frontend.
+highlights:
+  - en: Shadow geometry derived from 3D building and tree data, stored and queried in PostGIS.
+    de: Schattengeometrie aus 3D-Gebäude- und Baumdaten, gespeichert und abgefragt in PostGIS.
+  - en: Routing that weights street segments by how much shade they offer at the selected time.
+    de: Routing, das Straßenabschnitte danach gewichtet, wie viel Schatten sie zur gewählten Zeit bieten.
+  - en: Interactive 3D city view built with MapLibre GL and three.js.
+    de: Interaktive 3D-Stadtansicht mit MapLibre GL und three.js.
 stack: [React 19, TypeScript, MapLibre GL, three.js, FastAPI, PostGIS]
 links:
   - { kind: demo, href: 'https://shadeka.rezaafsariazar.com' }

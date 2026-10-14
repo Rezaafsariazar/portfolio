@@ -1,10 +1,9 @@
 ---
-import '@fontsource-variable/bricolage-grotesque';
-import '@fontsource-variable/public-sans';
+import '@fontsource-variable/inter';
 import '@fontsource/ibm-plex-mono/400.css';
 import '@fontsource/ibm-plex-mono/500.css';
 import '../styles/global.css';
-import { site } from '../data/site';
+import { site, cv } from '../data/site';
 import { ui, type Lang } from '../i18n/ui';
 
 const { lang } = Astro.props as { lang: Lang };
@@ -12,13 +11,20 @@ const t = ui[lang];
 const path = lang === 'en' ? '/' : '/de/';
 const canonical = new URL(path, site.url).href;
 const ogImage = new URL('/og.png', site.url).href;
+
 const ld = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: site.name,
   url: site.url,
+  email: `mailto:${site.email}`,
+  jobTitle: t.role,
+  description: t.description,
   address: { '@type': 'PostalAddress', addressLocality: site.location, addressCountry: 'DE' },
-  sameAs: [site.github],
+  alumniOf: cv.filter((e) => e.group === 'education').map((e) => ({ '@type': 'EducationalOrganization', name: e.org })),
+  worksFor: cv.filter((e) => e.group === 'experience').map((e) => ({ '@type': 'Organization', name: e.org })),
+  knowsAbout: ['Mobility data', 'GIS', 'Urban planning', 'Geospatial web development'],
+  sameAs: [site.github, site.linkedin],
 };
 ---
 <!doctype html>
@@ -28,13 +34,14 @@ const ld = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{t.title}</title>
     <meta name="description" content={t.description} />
+    <meta name="author" content={site.name} />
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang="en" href={new URL('/', site.url).href} />
     <link rel="alternate" hreflang="de" href={new URL('/de/', site.url).href} />
     <link rel="alternate" hreflang="x-default" href={new URL('/', site.url).href} />
     <meta name="color-scheme" content="light dark" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="profile" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:locale" content={t.ogLocale} />
     <meta property="og:title" content={t.title} />
@@ -43,18 +50,12 @@ const ld = {
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Reza Afsariazar: maps, sun and software for real cities" />
+    <meta property="og:image:alt" content={`${site.name} — ${t.role}`} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={t.title} />
     <meta name="twitter:description" content={t.description} />
     <meta name="twitter:image" content={ogImage} />
     <script type="application/ld+json" set:html={JSON.stringify(ld)} />
-    <script is:inline>
-      try {
-        var th = localStorage.getItem('theme');
-        if (th === 'light' || th === 'dark') document.documentElement.setAttribute('data-theme', th);
-      } catch (e) {}
-    </script>
   </head>
   <body>
     <slot />

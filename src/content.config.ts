@@ -8,12 +8,16 @@ const projects = defineCollection({
   loader: glob({ pattern: '*.yaml', base: './src/content/projects' }),
   schema: z.object({
     title: z.string(),
-    year: z.string(),
-    type: t,
-    status: z.enum(['live', 'archived', 'placeholder']).default('live'),
+    order: z.number().default(50),
+    period: z.string().default(''),
+    kind: t,
+    state: z.enum(['live', 'in-progress', 'archived', 'planned']).default('live'),
     summary: t,
-    stack: z.array(z.string()),
-    links: z.array(z.object({ kind: z.enum(['demo', 'source']), href: z.string().url() })).default([]),
+    role: t.optional(),
+    highlights: z.array(t).default([]),
+    stack: z.array(z.string()).default([]),
+    links: z.array(z.object({ kind: z.enum(['demo', 'source', 'report']), href: z.string().url() })).default([]),
+    figure: z.enum(['shadow-plate']).optional(),
   }),
 });
 

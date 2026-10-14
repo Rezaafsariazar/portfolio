@@ -1,110 +1,205 @@
 ---
 import { getCollection } from 'astro:content';
-import { site } from '../data/site';
+import { site, cv, skills } from '../data/site';
 import { ui, type Lang } from '../i18n/ui';
 
 const { lang } = Astro.props as { lang: Lang };
 const t = ui[lang];
 const other: Lang = lang === 'en' ? 'de' : 'en';
 const otherHref = other === 'en' ? '/' : '/de/';
+const home = lang === 'en' ? '/' : '/de/';
 
-const projects = (await getCollection('projects')).sort((a, b) => {
-  const ph = Number(a.data.status === 'placeholder') - Number(b.data.status === 'placeholder');
-  return ph || b.data.year.localeCompare(a.data.year) || a.data.title.localeCompare(b.data.title);
-});
-const pad = (n: number) => String(n).padStart(2, '0');
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const groups = (['experience', 'education'] as const).map((g) => ({ g, rows: cv.filter((e) => e.group === g) }));
+const study = cv.find((e) => e.group === 'education');
+const work = cv.find((e) => e.group === 'experience');
 ---
-<div class="wrap">
-  <a class="skip" href="#work">{t.skip}</a>
-  <header class="top">
-    <a class="mark" href={lang === 'en' ? '/' : '/de/'}>Reza<span>.</span>Afsariazar</a>
-    <nav aria-label="Sections">
-      <a href="#work">{t.nav.work}</a><a href="#about">{t.nav.about}</a><a href="#contact">{t.nav.contact}</a>
+<a class="skip" href="#projects">{t.skip}</a>
+
+<header class="top">
+  <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;width:100%">
+    <a class="brand" href={home}>{site.name}</a>
+    <nav aria-label={t.nav.projects}>
+      <a href="#projects">{t.nav.projects}</a>
+      <a href="#cv">{t.nav.cv}</a>
+      <a href="#about">{t.nav.about}</a>
+      <a href="#contact">{t.nav.contact}</a>
       <a class="lang" href={otherHref} hreflang={other} lang={other} aria-label={t.langSwitchLabel}>{t.langSwitch}</a>
     </nav>
-  </header>
+  </div>
+</header>
 
+<div class="wrap">
   <main>
-    <div class="hero" id="top">
-      <div>
-        <p class="coords">{site.coords} · {site.location}</p>
-        <h1>{t.h1a}<em>{t.h1b}</em>{t.h1c}</h1>
-        <p class="lede">{t.lede}</p>
-        <div class="cta">
-          <a class="btn primary" href="#work">{t.ctaWork}</a>
-          <a class="btn" href="#contact">{t.ctaContact}</a>
-        </div>
+    <div class="intro">
+      <span class="label">{site.location}, {site.country}</span>
+      <h1>{site.name}</h1>
+      <p class="role">{t.role}</p>
+      <p class="lead">{t.intro}</p>
+      <p class="note">
+        <span>{t.availability}</span>
+        {site.availability.placeholder && <span class="badge">{t.placeholder}</span>}
+      </p>
+      <div class="actions">
+        <a class="btn primary" href={`mailto:${site.email}`}>{t.emailAction}</a>
+        <a class="btn" href={site.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href={site.github} target="_blank" rel="noopener">GitHub</a>
+        {site.cv && <a class="btn" href={site.cv} download>{t.cvDownload}</a>}
       </div>
 
-      <div class="plate" id="plate" data-alt={t.alt} data-az={t.az} data-low={t.phases.low} data-mid={t.phases.mid} data-high={t.phases.high}>
-        <div class="plate-head"><span>{t.plate}</span><span id="phase">{t.phases.mid}</span></div>
-        <svg id="map" viewBox="0 0 400 320" role="img" aria-label={t.plateLabel}></svg>
-        <div class="slider">
-          <label for="hour">{t.time}</label>
-          <input id="hour" type="range" min="360" max="1200" step="5" value="840" />
-          <output id="clock" for="hour">14:00</output>
+      <dl class="facts">
+        <div>
+          <dt>{t.facts.based}</dt>
+          <dd>{site.location}, {site.country}</dd>
         </div>
-        <div class="plate-foot"><span id="alt">{t.alt}</span><span id="az">{t.az}</span></div>
-      </div>
+        {study && (
+          <div>
+            <dt>{t.facts.studying}</dt>
+            <dd>{study.role[lang]}<br /><span style="color:var(--muted)">{study.org}</span></dd>
+          </div>
+        )}
+        {work && (
+          <div>
+            <dt>{t.facts.working}</dt>
+            <dd>{work.role[lang]}<br /><span style="color:var(--muted)">{work.org}</span></dd>
+          </div>
+        )}
+        <div>
+          <dt>{t.facts.focus}</dt>
+          <dd>{t.factFocus}</dd>
+        </div>
+      </dl>
     </div>
 
-    <section id="work">
-      <div class="sec-head"><h2>{t.workH}</h2><p>{t.workP}</p></div>
-      <div class="plates">
-        {projects.map((p, i) => (
-          <article class:list={['card', { ghost: p.data.status === 'placeholder' }]}>
-            <div class="card-meta">
-              <span>{t.plateWord} {pad(i + 1)}</span>
-              <span>{p.data.year ? `${p.data.year} · ` : ''}{p.data.type[lang]}</span>
+    <section id="projects">
+      <div class="sec-head">
+        <span class="label">{t.projectsH}</span>
+        <div><h2>{t.projectsP}</h2></div>
+      </div>
+
+      <div class="projects">
+        {projects.map((p) => (
+          <article class="project">
+            <div class="aside">
+              <span class:list={['state', p.data.state]}>{t.states[p.data.state]}</span>
+              {p.data.period && <span class="label">{p.data.period}</span>}
             </div>
-            <h3>
-              {p.data.title}
-              {p.data.status === 'placeholder' && <span class="badge">{t.placeholder}</span>}
-            </h3>
-            <p>{p.data.summary[lang]}</p>
-            {p.data.stack.length > 0 && <ul class="tags">{p.data.stack.map((s) => <li>{s}</li>)}</ul>}
-            {p.data.links.length > 0 && (
-              <div class="links">
-                {p.data.links.map((l) => (
-                  <a href={l.href} target="_blank" rel="noopener">{t[l.kind]} ↗</a>
-                ))}
-              </div>
-            )}
+            <div>
+              <h3>{p.data.title}</h3>
+              <p class="kind">{p.data.kind[lang]}</p>
+              <p class="sum">{p.data.summary[lang]}</p>
+
+              {p.data.role && (
+                <div class="block">
+                  <span class="label">{t.roleLabel}</span>
+                  <p>{p.data.role[lang]}</p>
+                </div>
+              )}
+
+              {p.data.highlights.length > 0 && (
+                <ul class="hl">{p.data.highlights.map((h) => <li>{h[lang]}</li>)}</ul>
+              )}
+
+              {p.data.stack.length > 0 && (
+                <div class="block" style="margin-top:18px">
+                  <span class="label">{t.stackLabel}</span>
+                  <ul class="chips">{p.data.stack.map((s) => <li>{s}</li>)}</ul>
+                </div>
+              )}
+
+              {p.data.links.length > 0 && (
+                <div class="links">
+                  {p.data.links.map((l) => <a href={l.href} target="_blank" rel="noopener">{t[l.kind]} ↗</a>)}
+                </div>
+              )}
+
+              {p.data.figure === 'shadow-plate' && (
+                <figure class="plate" id="plate" data-alt={t.alt} data-az={t.az} data-low={t.phases.low} data-mid={t.phases.mid} data-high={t.phases.high}>
+                  <div class="plate-head">
+                    <span class="label">{t.figureH}</span>
+                    <span class="label" id="phase">{t.phases.mid}</span>
+                  </div>
+                  <svg id="map" viewBox="0 0 400 320" role="img" aria-label={t.plateLabel}></svg>
+                  <div class="slider">
+                    <label for="hour">{t.time}</label>
+                    <input id="hour" type="range" min="360" max="1200" step="5" value="840" />
+                    <output id="clock" for="hour">14:00</output>
+                  </div>
+                  <div class="plate-foot"><span id="alt">{t.alt}</span><span id="az">{t.az}</span></div>
+                  <ul class="legend" aria-hidden="true">
+                    <li><i class="k-b"></i>{t.legend.building}</li>
+                    <li><i class="k-t"></i>{t.legend.tree}</li>
+                    <li><i class="k-s"></i>{t.legend.shadow}</li>
+                    <li><i class="k-u"></i>{t.legend.sun}</li>
+                  </ul>
+                  <figcaption>{t.figureNote}</figcaption>
+                </figure>
+              )}
+            </div>
           </article>
         ))}
       </div>
     </section>
 
+    <section id="cv">
+      <div class="sec-head">
+        <span class="label">{t.cvH}</span>
+        <div><h2>{t.cvP}</h2></div>
+      </div>
+      {groups.map(({ g, rows }) => rows.length > 0 && (
+        <div class="cv-group">
+          <span class="label">{t.groups[g]}</span>
+          {rows.map((e) => (
+            <div class="cv-row">
+              <span class="when">
+                {e.period.value}
+                {e.period.placeholder && <> <span class="badge">{t.placeholder}</span></>}
+              </span>
+              <div>
+                <h3>{e.role[lang]} · <span class="org">{e.org}</span></h3>
+                <p>{e.detail[lang]}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      ))}
+    </section>
+
     <section id="about">
-      <div class="sec-head"><h2>{t.aboutH}</h2><p>{t.aboutP}</p></div>
-      <div class="about">
-        <div></div>
-        <div>
-          {t.about.map((para) => <p>{para}</p>)}
-          <div class="skills">
-            {t.skills.map((s) => <div><h4>{s.h}</h4><p>{s.p}</p></div>)}
-          </div>
+      <div class="sec-head">
+        <span class="label">{t.aboutH}</span>
+        <div><h2>{t.aboutP}</h2></div>
+      </div>
+      <div class="about-body">
+        <p>{t.aboutLong} <span class="badge">{t.placeholder}</span></p>
+        <div class="skills">
+          {skills.map((s) => (
+            <div>
+              <h3>{s.title[lang]}</h3>
+              <ul>{s.items[lang].map((i) => <li>{i}</li>)}</ul>
+            </div>
+          ))}
         </div>
       </div>
     </section>
 
     <section id="contact">
-      <div class="sec-head"><h2>{t.contactH}</h2><p>{t.contactP}</p></div>
-      <div class="contact-row">
-        <span class="big" id="mail">{site.email.value}</span>
-        <button type="button" id="copy" data-label={t.copy} data-copied={t.copied} data-fail={t.copyFail}>{t.copy}</button>
-        {site.email.placeholder && <span class="badge">{t.placeholder}</span>}
+      <div class="sec-head">
+        <span class="label">{t.contactH}</span>
+        <div><h2>{t.contactP}</h2></div>
       </div>
-      <div class="contact-links">
-        <a href={site.linkedin.value} target="_blank" rel="noopener">LinkedIn ↗</a>
-        <a href={site.github} target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="contact-mail" id="mail" href={`mailto:${site.email}`}>{site.email}</a>
+      <div class="contact-actions">
+        <button class="btn" type="button" id="copy" data-label={t.copy} data-copied={t.copied} data-fail={t.copyFail}>{t.copy}</button>
+        <a class="btn" href={site.linkedin} target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn" href={site.github} target="_blank" rel="noopener">GitHub ↗</a>
       </div>
     </section>
   </main>
 
   <footer>
-    <span>© {new Date().getFullYear()} {site.name} · {site.location}</span>
-    <button class="theme-btn" id="theme" type="button">{t.theme}</button>
+    <span>© {new Date().getFullYear()} {site.name}</span>
+    <span>{site.location}, {site.country}</span>
   </footer>
 </div>
 
