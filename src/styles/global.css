@@ -19,20 +19,6 @@
   --measure: 68ch;
   color-scheme: light;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    --bg: #0d1214; --surface: #141b1e; --ink: #e6ebed; --strong: #fff; --muted: #9aa5ac; --faint: #76828a;
-    --line: #232c30; --line-strong: #354046; --accent: #5fb8cc; --accent-bg: #12282f; --sun: #e0a33a;
-    --shadow: #000; --ground: #192024; --building: #222b30;
-    color-scheme: dark;
-  }
-}
-:root[data-theme='dark'] {
-  --bg: #0d1214; --surface: #141b1e; --ink: #e6ebed; --strong: #fff; --muted: #9aa5ac; --faint: #76828a;
-  --line: #232c30; --line-strong: #354046; --accent: #5fb8cc; --accent-bg: #12282f; --sun: #e0a33a;
-  --shadow: #000; --ground: #192024; --building: #222b30;
-  color-scheme: dark;
-}
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 88px; -webkit-text-size-adjust: 100%; }
