@@ -66,6 +66,8 @@ if (svg) {
   const draw = () => {
     const min = +hour.value;
     const t = (min - 360) / (1200 - 360);
+    document.documentElement.style.setProperty('--sx', t.toFixed(3));
+    document.documentElement.style.setProperty('--sy', Math.sin(Math.PI * t).toFixed(3));
     const elev = 8 + Math.sin(Math.PI * t) * 52;
     const azim = 80 + t * 200;
     const a = (azim * Math.PI) / 180;
