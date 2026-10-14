@@ -4,9 +4,9 @@ export const site = {
   url: 'https://rezaafsariazar.com',
   location: 'Karlsruhe',
   coords: '49.0069° N · 8.4037° E',
-  email: { value: 'hello@rezaafsariazar.com', placeholder: true },
+  email: { value: 'Rezaafsariazar@gmail.com', placeholder: false },
   github: 'https://github.com/Rezaafsariazar',
-  linkedin: { value: 'https://www.linkedin.com/in/your-handle', placeholder: true },
+  linkedin: { value: 'https://www.linkedin.com/in/rezaafsariazar', placeholder: false },
   cv: { href: '/Reza-Afsariazar-CV.pdf', placeholder: true },
   aboutPlaceholder: true,
 };

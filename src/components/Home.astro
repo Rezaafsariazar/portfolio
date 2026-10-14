@@ -99,7 +99,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
         <a href={site.linkedin.value} target="_blank" rel="noopener">LinkedIn ↗</a>
         <a href={site.github} target="_blank" rel="noopener">GitHub ↗</a>
         <a href={site.cv.href} download>{t.cv} ↓</a>
-        {(site.linkedin.placeholder || site.cv.placeholder) && <span class="badge">{t.placeholdersNote}</span>}
+        {site.cv.placeholder && <span class="badge">{t.placeholdersNote}</span>}
       </div>
     </section>
   </main>
